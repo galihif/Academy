@@ -2,11 +2,21 @@ package com.giftech.academy.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.giftech.academy.R
+import com.giftech.academy.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var activityHomeBinding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(activityHomeBinding.root)
+
+        val sectionsPagerAdapter = SectionsPagerAdapter(this,supportFragmentManager)
+        activityHomeBinding.viewPager.adapter = sectionsPagerAdapter
+        activityHomeBinding.tabs.setupWithViewPager(activityHomeBinding.viewPager)
+
+        supportActionBar?.elevation = 0f
     }
 }
