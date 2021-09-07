@@ -14,7 +14,7 @@ import com.giftech.academy.R
 import com.giftech.academy.data.CourseEntity
 import com.giftech.academy.databinding.ActivityDetailCourseBinding
 import com.giftech.academy.databinding.ContentDetailCourseBinding
-import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
+import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.CourseReaderActivity
 
 class DetailCourseActivity : AppCompatActivity() {

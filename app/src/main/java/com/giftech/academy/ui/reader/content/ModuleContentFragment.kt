@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.giftech.academy.data.ModuleEntity
 import com.giftech.academy.databinding.FragmentModuleContentBinding
-import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
+import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.CourseReaderViewModel
 
 class ModuleContentFragment : Fragment() {

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.giftech.academy.R
-import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
+import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.content.ModuleContentFragment
 import com.giftech.academy.ui.reader.list.ModuleListFragment
 

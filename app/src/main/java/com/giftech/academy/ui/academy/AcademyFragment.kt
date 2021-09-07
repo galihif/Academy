@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.giftech.academy.databinding.FragmentAcademyBinding
-import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
+import com.giftech.academy.viewmodel.ViewModelFactory
 
 class AcademyFragment : Fragment() {
 

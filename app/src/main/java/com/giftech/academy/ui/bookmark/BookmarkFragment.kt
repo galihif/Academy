@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.giftech.academy.R
 import com.giftech.academy.data.CourseEntity
 import com.giftech.academy.databinding.FragmentBookmarkBinding
-import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
+import com.giftech.academy.viewmodel.ViewModelFactory
 
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.giftech.academy.data.ModuleEntity
 import com.giftech.academy.databinding.FragmentModuleListBinding
-import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
+import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.CourseReaderActivity
 import com.giftech.academy.ui.reader.CourseReaderCallback
 import com.giftech.academy.ui.reader.CourseReaderViewModel
