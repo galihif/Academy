@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.giftech.academy.ui.reader.CourseReaderActivity
 import com.giftech.academy.R
 import com.giftech.academy.data.CourseEntity
 import com.giftech.academy.databinding.ActivityDetailCourseBinding
 import com.giftech.academy.databinding.ContentDetailCourseBinding
+import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
+import com.giftech.academy.ui.reader.CourseReaderActivity
 
 class DetailCourseActivity : AppCompatActivity() {
 
@@ -41,7 +42,8 @@ class DetailCourseActivity : AppCompatActivity() {
 
         val adapter = DetailCourseAdapter()
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailCourseViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[DetailCourseViewModel::class.java]
 
         val extras = intent.extras
         if(extras != null){

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.giftech.academy.R
 import com.giftech.academy.data.CourseEntity
 import com.giftech.academy.databinding.FragmentBookmarkBinding
+import com.giftech.academy.ui.academy.viewmodel.ViewModelFactory
 
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
@@ -29,10 +30,14 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if(activity!=null){
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[BookmarkViewModel::class.java]
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel = ViewModelProvider(this, factory)[BookmarkViewModel::class.java]
+
             val courses = viewModel.getBookmarks()
+
             val adapter = BookmarkAdapter(this)
             adapter.setCourses(courses)
+
             with(fragmentBookmarkBinding.rvBookmark) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
