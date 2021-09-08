@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.giftech.academy.data.ModuleEntity
 import com.giftech.academy.databinding.FragmentModuleContentBinding
-import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.CourseReaderViewModel
+import com.giftech.academy.viewmodel.ViewModelFactory
 
 class ModuleContentFragment : Fragment() {
 
@@ -35,8 +35,13 @@ class ModuleContentFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
 
-            val module = viewModel.getSelectedModule()
-            populateWebView(module)
+            fragmentModuleContentBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getSelectedModule().observe(viewLifecycleOwner, { module ->
+                fragmentModuleContentBinding.progressBar.visibility = View.GONE
+                if (module != null) {
+                    populateWebView(module)
+                }
+            })
         }
     }
 

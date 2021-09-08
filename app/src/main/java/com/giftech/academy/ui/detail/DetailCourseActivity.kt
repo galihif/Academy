@@ -2,6 +2,7 @@ package com.giftech.academy.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,8 +15,8 @@ import com.giftech.academy.R
 import com.giftech.academy.data.CourseEntity
 import com.giftech.academy.databinding.ActivityDetailCourseBinding
 import com.giftech.academy.databinding.ContentDetailCourseBinding
-import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.CourseReaderActivity
+import com.giftech.academy.viewmodel.ViewModelFactory
 
 class DetailCourseActivity : AppCompatActivity() {
 
@@ -47,13 +48,22 @@ class DetailCourseActivity : AppCompatActivity() {
 
         val extras = intent.extras
         if(extras != null){
+
+            activityDetailCourseBinding.progressBar.visibility = View.VISIBLE
+            activityDetailCourseBinding.containerDetailContent.visibility = View.INVISIBLE
+
             val courseId = extras.getString(EXTRA_COURSE)
             if(courseId != null){
                 viewModel.setSelectedCourse(courseId)
-                val modules = viewModel.getModules()
-                adapter.setModules(modules)
+                viewModel.getModules().observe(this, {modules ->
+                    activityDetailCourseBinding.progressBar.visibility = View.GONE
+                    activityDetailCourseBinding.containerDetailContent.visibility = View.VISIBLE
 
-                populateCourse(viewModel.getCourse() as CourseEntity)
+                    adapter.setModules(modules)
+                    adapter.notifyDataSetChanged()
+                })
+
+                viewModel.getCourse().observe(this, { course -> populateCourse(course) })
             }
         }
 

@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.giftech.academy.data.ModuleEntity
 import com.giftech.academy.databinding.FragmentModuleListBinding
-import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.CourseReaderActivity
 import com.giftech.academy.ui.reader.CourseReaderCallback
 import com.giftech.academy.ui.reader.CourseReaderViewModel
+import com.giftech.academy.viewmodel.ViewModelFactory
 
 class ModuleListFragment : Fragment(), MyAdapterClickListener {
 
@@ -46,7 +46,12 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         val viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
 
         adapter = ModuleListAdapter(this)
-        populateRecyclerView(viewModel.getModules())
+
+        fragmentModuleListBinding.progressBar.visibility = View.VISIBLE
+        viewModel.getModules().observe(viewLifecycleOwner, { modules ->
+            fragmentModuleListBinding.progressBar.visibility = View.GONE
+            populateRecyclerView(modules)
+        })
     }
 
     override fun onAttach(context: Context) {
