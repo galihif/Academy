@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.giftech.academy.R
-import com.giftech.academy.data.CourseEntity
+import com.giftech.academy.data.source.local.entity.CourseEntity
 import com.giftech.academy.databinding.ItemsBookmarkBinding
 import com.giftech.academy.ui.detail.DetailCourseActivity
 
