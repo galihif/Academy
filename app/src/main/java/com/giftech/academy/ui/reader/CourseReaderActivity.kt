@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.giftech.academy.R
-import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.ui.reader.content.ModuleContentFragment
 import com.giftech.academy.ui.reader.list.ModuleListFragment
+import com.giftech.academy.viewmodel.ViewModelFactory
 
 class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
+
+    private lateinit var viewModel: CourseReaderViewModel
 
     companion object {
         const val EXTRA_COURSE_ID = "extra_course_id"
@@ -19,7 +21,7 @@ class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
         setContentView(R.layout.activity_course_reader)
 
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[CourseReaderViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[CourseReaderViewModel::class.java]
 
         val bundle = intent.extras
         if (bundle != null) {

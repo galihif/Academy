@@ -2,9 +2,12 @@ package com.giftech.academy.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -31,6 +34,9 @@ class DetailCourseActivity : AppCompatActivity() {
     private lateinit var detailContentBinding: ContentDetailCourseBinding
     private lateinit var activityDetailCourseBinding:ActivityDetailCourseBinding
 
+    private lateinit var viewModel: DetailCourseViewModel
+    private var menu: Menu? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,7 +52,7 @@ class DetailCourseActivity : AppCompatActivity() {
         val adapter = DetailCourseAdapter()
 
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[DetailCourseViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[DetailCourseViewModel::class.java]
 
         val extras = intent.extras
         if(extras != null){
@@ -86,6 +92,46 @@ class DetailCourseActivity : AppCompatActivity() {
             this.adapter = adapter
             val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        this.menu = menu
+        viewModel.courseModule.observe(this, { courseWithModule ->
+            if (courseWithModule != null) {
+                when (courseWithModule.status) {
+                    Status.LOADING -> activityDetailCourseBinding.progressBar.visibility = View.VISIBLE
+                    Status.SUCCESS -> if (courseWithModule.data != null) {
+                        activityDetailCourseBinding.progressBar.visibility = View.GONE
+                        val state = courseWithModule.data.mCourse.bookmarked
+                        setBookmarkState(state)
+                    }
+                    Status.ERROR -> {
+                        activityDetailCourseBinding.progressBar.visibility = View.GONE
+                        Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_bookmark) {
+            viewModel.setBookmark()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setBookmarkState(state: Boolean) {
+        if (menu == null) return
+        val menuItem = menu?.findItem(R.id.action_bookmark)
+        if (state) {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmarked_white)
+        } else {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_white)
         }
     }
 

@@ -45,7 +45,7 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
 
         adapter = ModuleListAdapter(this)
 
