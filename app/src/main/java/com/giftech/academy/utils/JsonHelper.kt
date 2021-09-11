@@ -7,6 +7,7 @@ import com.giftech.academy.data.source.remote.response.ModuleResponse
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
+import java.util.*
 
 class JsonHelper(private val context: Context) {
 
@@ -44,7 +45,6 @@ class JsonHelper(private val context: Context) {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-
         return list
     }
 
@@ -73,7 +73,7 @@ class JsonHelper(private val context: Context) {
         return list
     }
 
-    fun loadContent(moduleId: String): ContentResponse {
+    fun loadContent(moduleId: String?): ContentResponse {
         val fileName = String.format("Content_%s.json", moduleId)
         var contentResponse: ContentResponse? = null
         try {
@@ -88,5 +88,5 @@ class JsonHelper(private val context: Context) {
         }
         return contentResponse as ContentResponse
     }
-
 }
+

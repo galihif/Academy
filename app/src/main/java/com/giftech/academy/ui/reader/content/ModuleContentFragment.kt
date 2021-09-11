@@ -13,24 +13,29 @@ import com.giftech.academy.ui.reader.CourseReaderViewModel
 import com.giftech.academy.viewmodel.ViewModelFactory
 import com.giftech.academy.vo.Status
 
+/**
+ * A simple [Fragment] subclass.
+ */
 class ModuleContentFragment : Fragment() {
 
     private lateinit var viewModel: CourseReaderViewModel
 
+    private var _fragmentModuleContentBinding: FragmentModuleContentBinding? = null
+    private val binding get() = _fragmentModuleContentBinding
+
     companion object {
         val TAG: String = ModuleContentFragment::class.java.simpleName
-        fun newInstance(): ModuleContentFragment = ModuleContentFragment()
+
+        fun newInstance(): ModuleContentFragment {
+            return ModuleContentFragment()
+        }
     }
 
-    private lateinit var fragmentModuleContentBinding: FragmentModuleContentBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        fragmentModuleContentBinding = FragmentModuleContentBinding.inflate(inflater, container, false)
-        return fragmentModuleContentBinding.root
+        _fragmentModuleContentBinding = FragmentModuleContentBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,12 +44,12 @@ class ModuleContentFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
 
-            viewModel.selectedModule.observe(viewLifecycleOwner, { moduleEntity ->
+            viewModel.selectedModule.observe(this, { moduleEntity ->
                 if (moduleEntity != null) {
                     when (moduleEntity.status) {
-                        Status.LOADING -> fragmentModuleContentBinding?.progressBar?.visibility = View.VISIBLE
+                        Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
                         Status.SUCCESS -> if (moduleEntity.data != null) {
-                            fragmentModuleContentBinding?.progressBar?.visibility = View.GONE
+                            binding?.progressBar?.visibility = View.GONE
                             if (moduleEntity.data.contentEntity != null) {
                                 populateWebView(moduleEntity.data)
                             }
@@ -52,39 +57,42 @@ class ModuleContentFragment : Fragment() {
                             if (!moduleEntity.data.read) {
                                 viewModel.readContent(moduleEntity.data)
                             }
+
                         }
                         Status.ERROR -> {
-                            fragmentModuleContentBinding?.progressBar?.visibility = View.GONE
+                            binding?.progressBar?.visibility = View.GONE
                             Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    fragmentModuleContentBinding?.btnNext?.setOnClickListener { viewModel.setNextPage() }
-                    fragmentModuleContentBinding?.btnPrev?.setOnClickListener { viewModel.setPrevPage() }
+
+                    binding?.btnNext?.setOnClickListener { viewModel.setNextPage() }
+                    binding?.btnPrev?.setOnClickListener { viewModel.setPrevPage() }
+
                 }
             })
         }
+    }
+
+    private fun populateWebView(module: ModuleEntity) {
+        binding?.webView?.loadData(module.contentEntity?.content ?: "", "text/html", "UTF-8")
     }
 
     private fun setButtonNextPrevState(module: ModuleEntity) {
         if (activity != null) {
             when (module.position) {
                 0 -> {
-                    fragmentModuleContentBinding?.btnPrev?.isEnabled = false
-                    fragmentModuleContentBinding?.btnNext?.isEnabled = true
+                    binding?.btnPrev?.isEnabled = false
+                    binding?.btnNext?.isEnabled = true
                 }
                 viewModel.getModuleSize() - 1 -> {
-                    fragmentModuleContentBinding?.btnPrev?.isEnabled = true
-                    fragmentModuleContentBinding?.btnNext?.isEnabled = false
+                    binding?.btnPrev?.isEnabled = true
+                    binding?.btnNext?.isEnabled = false
                 }
                 else -> {
-                    fragmentModuleContentBinding?.btnPrev?.isEnabled = true
-                    fragmentModuleContentBinding?.btnNext?.isEnabled = true
+                    binding?.btnPrev?.isEnabled = true
+                    binding?.btnNext?.isEnabled = true
                 }
             }
         }
-    }
-
-    private fun populateWebView(module: ModuleEntity) {
-        fragmentModuleContentBinding.webView.loadData(module.contentEntity?.content ?: "", "text/html", "UTF-8")
     }
 }

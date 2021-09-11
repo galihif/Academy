@@ -7,23 +7,23 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "courseentities")
 data class CourseEntity(
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "courseId")
-    var courseId: String,
+        @PrimaryKey
+        @NonNull
+        @ColumnInfo(name = "courseId")
+        var courseId: String,
 
-    @ColumnInfo(name = "title")
-    var title: String,
+        @ColumnInfo(name = "title")
+        var title: String,
 
-    @ColumnInfo(name = "description")
-    var description: String,
+        @ColumnInfo(name = "description")
+        var description: String,
 
-    @ColumnInfo(name = "deadline")
-    var deadline: String,
+        @ColumnInfo(name = "deadline")
+        var deadline: String,
 
-    @ColumnInfo(name = "bookmarked")
-    var bookmarked: Boolean = false,
+        @ColumnInfo(name = "bookmarked")
+        var bookmarked: Boolean = false,
 
-    @ColumnInfo(name = "imagePath")
-    var imagePath: String
+        @ColumnInfo(name = "imagePath")
+        var imagePath: String
 )

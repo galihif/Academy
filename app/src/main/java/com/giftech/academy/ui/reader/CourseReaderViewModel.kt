@@ -8,9 +8,11 @@ import com.giftech.academy.data.AcademyRepository
 import com.giftech.academy.data.source.local.entity.ModuleEntity
 import com.giftech.academy.vo.Resource
 
-class CourseReaderViewModel(private val academyRepository: AcademyRepository):ViewModel() {
+
+class CourseReaderViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
 
     var courseId = MutableLiveData<String>()
+
     var moduleId = MutableLiveData<String>()
 
     fun setSelectedCourse(courseId: String) {
@@ -68,10 +70,5 @@ class CourseReaderViewModel(private val academyRepository: AcademyRepository):Vi
             }
         }
     }
-
-//    fun getModules(): LiveData<List<ModuleEntity>> = academyRepository.getAllModulesByCourse(courseId)
-//
-//    fun getSelectedModule(): LiveData<ModuleEntity> = academyRepository.getContent(courseId, moduleId)
-
-
 }
+

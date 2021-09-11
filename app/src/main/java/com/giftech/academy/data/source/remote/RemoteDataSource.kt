@@ -10,19 +10,20 @@ import com.giftech.academy.data.source.remote.response.ModuleResponse
 import com.giftech.academy.utils.EspressoIdlingResource
 import com.giftech.academy.utils.JsonHelper
 
-class RemoteDataSource private constructor(private val jsonHelper: JsonHelper){
+class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
 
     private val handler = Handler(Looper.getMainLooper())
 
     companion object {
         private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
+
         @Volatile
         private var instance: RemoteDataSource? = null
 
         fun getInstance(helper: JsonHelper): RemoteDataSource =
-            instance ?: synchronized(this) {
-                instance ?: RemoteDataSource(helper).apply { instance = this }
-            }
+                instance ?: synchronized(this) {
+                    RemoteDataSource(helper).apply { instance = this }
+                }
     }
 
     fun getAllCourses(): LiveData<ApiResponse<List<CourseResponse>>> {
@@ -54,15 +55,5 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper){
         }, SERVICE_LATENCY_IN_MILLIS)
         return resultContent
     }
-
-    interface LoadCoursesCallback {
-        fun onAllCoursesReceived(courseResponses: List<CourseResponse>)
-    }
-    interface LoadModulesCallback {
-        fun onAllModulesReceived(moduleResponses: List<ModuleResponse>)
-    }
-    interface LoadContentCallback {
-        fun onContentReceived(contentResponse: ContentResponse)
-    }
-
 }
+

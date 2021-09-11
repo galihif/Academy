@@ -2,10 +2,10 @@ package com.giftech.academy.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.giftech.academy.data.source.remote.ApiResponse
-import com.giftech.academy.data.source.remote.StatusResponse
 import com.giftech.academy.utils.AppExecutors
 import com.giftech.academy.vo.Resource
+import com.giftech.academy.data.source.remote.ApiResponse
+import com.giftech.academy.data.source.remote.StatusResponse
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
 
@@ -29,7 +29,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
         }
     }
 
-    protected fun onFetchFailed() {}
+    protected open fun onFetchFailed() {}
 
     protected abstract fun loadFromDB(): LiveData<ResultType>
 
@@ -52,13 +52,13 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
             when (response.status) {
                 StatusResponse.SUCCESS ->
                     mExecutors.diskIO().execute {
-                        saveCallResult(response.body)
-                        mExecutors.mainThread().execute {
-                            result.addSource(loadFromDB()) { newData ->
-                                result.value = Resource.success(newData)
-                            }
+                    saveCallResult(response.body)
+                    mExecutors.mainThread().execute {
+                        result.addSource(loadFromDB()) { newData ->
+                            result.value = Resource.success(newData)
                         }
                     }
+                }
                 StatusResponse.EMPTY -> mExecutors.mainThread().execute {
                     result.addSource(loadFromDB()) { newData ->
                         result.value = Resource.success(newData)
@@ -75,5 +75,4 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
     }
 
     fun asLiveData(): LiveData<Resource<ResultType>> = result
-
 }

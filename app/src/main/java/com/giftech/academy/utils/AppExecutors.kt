@@ -3,13 +3,14 @@ package com.giftech.academy.utils
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
+
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class AppExecutors@VisibleForTesting constructor(
-    private val diskIO: Executor,
-    private val networkIO: Executor,
-    private val mainThread: Executor
+class AppExecutors @VisibleForTesting constructor(
+        private val diskIO: Executor,
+        private val networkIO: Executor,
+        private val mainThread: Executor
 ) {
 
     companion object {
@@ -17,9 +18,9 @@ class AppExecutors@VisibleForTesting constructor(
     }
 
     constructor() : this(
-        Executors.newSingleThreadExecutor(),
-        Executors.newFixedThreadPool(THREAD_COUNT),
-        MainThreadExecutor()
+            Executors.newSingleThreadExecutor(),
+            Executors.newFixedThreadPool(THREAD_COUNT),
+            MainThreadExecutor()
     )
 
     fun diskIO(): Executor = diskIO
@@ -35,5 +36,4 @@ class AppExecutors@VisibleForTesting constructor(
             mainThreadHandler.post(command)
         }
     }
-
 }

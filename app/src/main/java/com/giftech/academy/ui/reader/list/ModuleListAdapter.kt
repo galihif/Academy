@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.giftech.academy.data.source.local.entity.ModuleEntity
 import com.giftech.academy.databinding.ItemsModuleListCustomBinding
+import java.util.*
 
-class ModuleListAdapter internal constructor(private val listener: MyAdapterClickListener)
-    : RecyclerView.Adapter<ModuleListAdapter.ModuleViewHolder>() {
-
+class ModuleListAdapter internal constructor(private val listener: MyAdapterClickListener) : RecyclerView.Adapter<ModuleListAdapter.ModuleViewHolder>() {
     private val listModules = ArrayList<ModuleEntity>()
 
     internal fun setModules(modules: List<ModuleEntity>?) {
@@ -17,19 +16,16 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
         this.listModules.addAll(modules)
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ModuleListAdapter.ModuleViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {
         val binding = ItemsModuleListCustomBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ModuleViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ModuleListAdapter.ModuleViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ModuleViewHolder, position: Int) {
         val module = listModules[position]
-        holder.bind(module)
-        holder.itemView.setOnClickListener {
-            listener.onItemClicked(holder.adapterPosition, listModules[holder.adapterPosition].moduleId)
+        viewHolder.bind(module)
+        viewHolder.itemView.setOnClickListener {
+            listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId)
         }
     }
 

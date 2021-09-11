@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:clipToPadding="false"
     android:descendantFocusability="blocksDescendants"
-    android:padding="16dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/image_poster"
@@ -105,6 +104,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_list_module"
         tools:listitem="@layout/items_module_list" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

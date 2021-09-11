@@ -6,17 +6,25 @@ import com.giftech.academy.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var activityHomeBinding: ActivityHomeBinding
+    private var _activityHomeBinding: ActivityHomeBinding? = null
+    private val binding get() = _activityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(activityHomeBinding.root)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this,supportFragmentManager)
-        activityHomeBinding.viewPager.adapter = sectionsPagerAdapter
-        activityHomeBinding.tabs.setupWithViewPager(activityHomeBinding.viewPager)
+        _activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        binding?.viewPager?.adapter = sectionsPagerAdapter
+        binding?.tabs?.setupWithViewPager(binding?.viewPager)
 
         supportActionBar?.elevation = 0f
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _activityHomeBinding = null
     }
 }
